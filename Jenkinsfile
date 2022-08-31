@@ -28,8 +28,7 @@ pipeline {
 
         stage('Installing with Helm') {
             steps {
-            script {
-                 {
+            script {   
                 try {
                    sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}" --wait'
                 }
@@ -45,6 +44,5 @@ pipeline {
         }
     }
     }
-}
 
 
