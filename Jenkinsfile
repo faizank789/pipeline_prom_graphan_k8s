@@ -49,7 +49,7 @@ pipeline {
                     values_path="charts/kube-prometheus-stack/values.yaml"
                     namespace="monitoring"
                    helm repo add prometheus-community $helm_repo && \
-                   helm install monitoring prometheus-community/kube-prometheus-stack -f $values_path --namespace $namespace --wait"
+                   helm install monitoring prometheus-community/kube-prometheus-stack -f $values_path --namespace $namespace --wait
                   '''
                 }
                 catch (Exception errorlogs) {
