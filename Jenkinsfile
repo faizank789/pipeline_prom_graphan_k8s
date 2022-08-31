@@ -28,7 +28,7 @@ pipeline {
                 try {
                     sh '''
                     #!/bin/bash
-                    if ! [[ "${env.helm_binary}" ]] ; then
+                    if ! [[ env.helm_binary ]] ; then
                        echo "Not Found Helm Package !"
                     fi
                     '''
