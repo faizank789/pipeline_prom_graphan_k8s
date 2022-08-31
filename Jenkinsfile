@@ -31,6 +31,7 @@ pipeline {
             script {   
                 try {
                    sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
+                   sh 'sudo kubectl create ns monitoring'
                    sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}"'
                 }
                 catch (Exception errorlogs) {
