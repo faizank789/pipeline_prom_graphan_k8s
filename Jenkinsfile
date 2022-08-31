@@ -33,8 +33,8 @@ pipeline {
                    if ! [[ $namespace ]] ; then
                    kubectl create ns monitoring 
                    fi
-                   helm repo add prometheus-community "${helm_repo}"
-                   helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}"
+                   helm repo add prometheus-community "${helm_repo}" &&
+                   helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path} --wait"
                   '''
                 }
                 catch (Exception errorlogs) {
