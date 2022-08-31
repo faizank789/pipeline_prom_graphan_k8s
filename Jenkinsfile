@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        helm_repo="https://prometheus-community.github.io/helm-charts"
-        values_path="charts/kube-prometheus-stack/values.yaml"
-    }
-
     stages {
         stage('Cloning git') {
             steps {
@@ -29,7 +24,7 @@ pipeline {
                     #!/bin/bash
                     helm_binary=`ls /usr/local/bin/helm`
                     if ! [[ $helm_binary ]] ; then
-                       curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3" && \
+                       curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
                        chmod 700 get_helm.sh && \
                        ./get_helm.sh
                     fi
@@ -50,12 +45,14 @@ pipeline {
                 try {
                     sh '''
                     #!/bin/bash
+                    helm_repo="https://prometheus-community.github.io/helm-charts"
+                    values_path="charts/kube-prometheus-stack/values.yaml"
                    namespace=`kubectl get ns monitoring`
                    if ! [[ $namespace ]] ; then
                    kubectl create ns monitoring 
                    fi
-                   helm repo add prometheus-community "${env.helm_repo}" && \
-                   helm install monitoring prometheus-community/kube-prometheus-stack -f "${env.values_path} --wait"
+                   helm repo add prometheus-community $helm_repo && \
+                   helm install monitoring prometheus-community/kube-prometheus-stack -f $values_path --wait"
                   '''
                 }
                 catch (Exception errorlogs) {
