@@ -31,7 +31,7 @@ pipeline {
             script {
                 if( ) {
                 try {
-                   sh ' helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}" --wait'
+                   sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}" --wait'
                 }
                 catch (Exception errorlogs) {
                     println(errorlogs)
