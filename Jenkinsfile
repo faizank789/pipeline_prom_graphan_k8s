@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-
         helm_repo="https://prometheus-community.github.io/helm-charts"
         helm_binary="/usr/local/bin/helm"
         values_path="charts/kube-prometheus-stack/values.yaml"
@@ -30,8 +29,11 @@ pipeline {
                 try {
                     sh '''
                     #!/bin/bash
-                   helm repo add prometheus-community "${helm_repo}" && 
-                   kubectl create ns monitoring --kubeconfig=$HOME/.kube/config &&
+                   namespace=kubectl get ns monitoring 
+                   if ! [[ $namespace ]] ; then
+                   kubectl create ns monitoring 
+                   fi
+                   helm repo add prometheus-community "${helm_repo}"
                    helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}"
                   '''
                 }
