@@ -37,9 +37,6 @@ pipeline {
                     echo "Registry login issue Please check !"
                 }
             }
-            else {
-                echo "Skipping Logging ECR !"
-            }
             }
         }
     }
