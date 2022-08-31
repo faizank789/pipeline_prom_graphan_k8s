@@ -30,8 +30,8 @@ pipeline {
             steps {
             script {   
                 try {
-                   sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
-                   sh 'kubectl create ns monitoring'
+ //                  sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
+//                  sh 'kubectl create ns monitoring --kubeconfig=$HOME/.kube/config'
                    sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}"'
                 }
                 catch (Exception errorlogs) {
