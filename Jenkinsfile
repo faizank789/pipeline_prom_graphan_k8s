@@ -6,6 +6,7 @@ pipeline {
         helm_repo="https://prometheus-community.github.io/helm-charts"
 
         helm_path="/usr/local/bin/helm"
+        values_path="charts/kube-prometheus-stack/values.yaml"
 
     }
 
@@ -23,50 +24,27 @@ pipeline {
             }
             }
         }
-        
-        stage('checking if Helm found') {
+
+
+        stage('Installing with Helm') {
             steps {
             script {
-                if (!env.helm_path)
+                if( ) {
                 try {
-                 echo "Helm not found Installing"
-                    sh '''
-                    #!/bin/bash
-                   sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 
-                   sudo  chmod 700 get_helm.sh
-                   sudo bash get_helm.sh
-                    '''
+                   sh ' helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}" --wait'
                 }
                 catch (Exception errorlogs) {
                     println(errorlogs)
-                    echo "something wrong while installation helm | Please check !"  
+                    echo "Registry login issue Please check !"
                 }
+            }
+            else {
+                echo "Skipping Logging ECR !"
             }
             }
         }
-
-
-
-    //     stage('Installing with Helm') {
-    //         steps {
-    //         script {
-    //             if( ) {
-    //             try {
-    //                 sh 'helm install consul --wait --values helm-consul-values.yml'
-    //                 helm install monitoring prometheus-community/kube-prometheus-stack -f values.yaml --wait
-    //             }
-    //             catch (Exception errorlogs) {
-    //                 println(errorlogs)
-    //                 echo "Registry login issue Please check !"
-    //             }
-    //         }
-    //         else {
-    //             echo "Skipping Logging ECR !"
-    //         }
-    //         }
-    //     }
-    // }
-    // }
+    }
+    }
 }
-}
+
 
