@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script { 
                     try { 
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/faizank789/promethus_graphana_helm.git'
+                  git branch: 'main', credentialsId: 'faizank789', url: 'git@github.com:faizank789/pipeline_prom_graphan_k8s.git'
             }
              catch (Exception errorlogs) {
                     println(errorlogs)
