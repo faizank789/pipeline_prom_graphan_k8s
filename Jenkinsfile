@@ -16,28 +16,27 @@ pipeline {
             }
         }
 
-    //  stage('Checking helm Package')  {
-    //     steps {
-    //         script {
-    //             try {
-    //                 sh '''
-    //                 #!/bin/bash
-    //                 helm_binary=`ls /usr/local/bin/helm`
-    //                 if ! [[ $helm_binary ]] ; then
-    //                    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
-    //                    chmod 700 get_helm.sh && \
-    //                    ./get_helm.sh
-    //                 fi
-    //                 '''
-    //             }
-    //             catch (Exception errorlogs) {
-    //                 println(errorlogs)
-    //                 echo " something wrong for helm package please check !"
-    //             }
-    //         }
-    //     }
-    //  }
-
+     stage('Checking helm Package')  {
+        steps {
+            script {
+                try {
+                    sh '''
+                    #!/bin/bash
+                    helm_binary=`ls /usr/local/bin/helm`
+                    if ! [[ $helm_binary ]] ; then
+                       curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
+                       chmod 700 get_helm.sh && \
+                       ./get_helm.sh
+                    fi
+                    '''
+                }
+                catch (Exception errorlogs) {
+                    println(errorlogs)
+                    echo " something wrong for helm package please check !"
+                }
+            }
+        }
+     }
 
         stage('Installing with Helm') {
             steps {
