@@ -53,7 +53,7 @@ pipeline {
                 }
                 catch (Exception errorlogs) {
                     println(errorlogs)
-                    echo "Registry login issue Please check !"
+                    echo "Something wrong while installation please check !"
                 }
             }
             }
