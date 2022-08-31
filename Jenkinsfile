@@ -22,29 +22,50 @@ pipeline {
             }
         }
 
-
-        stage('Installing with Helm') {
-            steps {
-            script {   
+     stage('Checking helm Package')  {
+        steps {
+            script {
                 try {
                     sh '''
                     #!/bin/bash
-                   namespace=`kubectl get ns monitoring`
-                   if ! [[ $namespace ]] ; then
-                   kubectl create ns monitoring 
-                   fi
-                   helm repo add prometheus-community "${helm_repo}" &&
-                   helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path} --wait"
-                  '''
+                    if ! [[ "${env.helm_binary}" ]] ; then
+                       echo "Not Found Helm Package !"
+                    fi
+                    '''
                 }
                 catch (Exception errorlogs) {
                     println(errorlogs)
-                    echo "Registry login issue Please check !"
+                    echo " something for helm package please check !"
                 }
             }
-            }
         }
-    }
+     }
+
+
+
+
+    //     stage('Installing with Helm') {
+    //         steps {
+    //         script {   
+    //             try {
+    //                 sh '''
+    //                 #!/bin/bash
+    //                namespace=`kubectl get ns monitoring`
+    //                if ! [[ $namespace ]] ; then
+    //                kubectl create ns monitoring 
+    //                fi
+    //                helm repo add prometheus-community "${env.helm_repo}" &&
+    //                helm install monitoring prometheus-community/kube-prometheus-stack -f "${env.values_path} --wait"
+    //               '''
+    //             }
+    //             catch (Exception errorlogs) {
+    //                 println(errorlogs)
+    //                 echo "Registry login issue Please check !"
+    //             }
+    //         }
+    //         }
+    //     }
+     }
     }
 
 
