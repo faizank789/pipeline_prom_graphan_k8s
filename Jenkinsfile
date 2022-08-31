@@ -27,7 +27,7 @@ pipeline {
                 try {
                     sh '''
                     #!/bin/bash
-                    helm_binary=`/usr/local/bin/helm`
+                    helm_binary=`ls /usr/local/bin/helm`
                     if ! [[ $helm_binary ]] ; then
                        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3" && \
                        chmod 700 get_helm.sh && \
