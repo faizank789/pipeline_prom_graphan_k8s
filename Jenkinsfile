@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         helm_repo="https://prometheus-community.github.io/helm-charts"
-        helm_binary="/usr/local/bin/helm"
         values_path="charts/kube-prometheus-stack/values.yaml"
     }
 
@@ -28,7 +27,8 @@ pipeline {
                 try {
                     sh '''
                     #!/bin/bash
-                    if ! [[ env.helm_binary ]] ; then
+                    helm_binary=`ls -lrth /usr/local/bin/helm`
+                    if ! [[ $helm_binary ]] ; then
                        echo "Not Found Helm Package !"
                     fi
                     '''
