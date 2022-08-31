@@ -4,10 +4,8 @@ pipeline {
     environment {
 
         helm_repo="https://prometheus-community.github.io/helm-charts"
-
-        helm_path="/usr/local/bin/helm"
+        helm_binary="/usr/local/bin/helm"
         values_path="charts/kube-prometheus-stack/values.yaml"
-
     }
 
     stages {
@@ -30,9 +28,9 @@ pipeline {
             steps {
             script {   
                 try {
- //                  sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
-//                  sh 'kubectl create ns monitoring --kubeconfig=$HOME/.kube/config'
-                   sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}"'
+                  sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
+                  sh 'kubectl create ns monitoring --kubeconfig=$HOME/.kube/config'
+                  sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}"'
                 }
                 catch (Exception errorlogs) {
                     println(errorlogs)
