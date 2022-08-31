@@ -31,7 +31,7 @@ pipeline {
             script {   
                 try {
                    sh 'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts'
-                   sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}" --wait'
+                   sh 'helm install monitoring prometheus-community/kube-prometheus-stack -f "${values_path}"'
                 }
                 catch (Exception errorlogs) {
                     println(errorlogs)
