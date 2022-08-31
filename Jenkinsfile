@@ -47,12 +47,9 @@ pipeline {
                     #!/bin/bash
                     helm_repo="https://prometheus-community.github.io/helm-charts"
                     values_path="charts/kube-prometheus-stack/values.yaml"
-                   namespace=`kubectl get ns monitoring`
-                   if ! [[ $namespace ]] ; then
-                   kubectl create ns monitoring 
-                   fi
+                    namespace=monitoring
                    helm repo add prometheus-community $helm_repo && \
-                   helm install monitoring prometheus-community/kube-prometheus-stack -f $values_path --wait"
+                   helm install monitoring prometheus-community/kube-prometheus-stack -f $values_path --namespace $namespace --wait"
                   '''
                 }
                 catch (Exception errorlogs) {
