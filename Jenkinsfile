@@ -29,7 +29,7 @@ pipeline {
                 try {
                     sh '''
                     #!/bin/bash
-                   namespace=kubectl get ns monitoring 
+                   namespace=`kubectl get ns monitoring`
                    if ! [[ $namespace ]] ; then
                    kubectl create ns monitoring 
                    fi
